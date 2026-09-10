@@ -1,0 +1,395 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Canvas / Backgrounds */
+  --color-bg-primary: #F3EFE5;
+  --color-background: #F3EFE5;
+  --color-bg-secondary: #E9E1D0;
+  --color-secondary-background: #E9E1D0;
+  --color-surface: #FAF8F2;
+  --color-pure-white: #FFFFFF;
+  --color-white: #FFFFFF;
+
+  /* Typography / Ink */
+  --color-ink: #171717;
+  --color-ink-secondary: #30302D;
+  --color-secondary-ink: #30302D;
+  --color-muted: #6E6A61;
+
+  /* Structural Borders & Dividers */
+  --color-border: #262522;
+  --color-border-light: #D6D0C3;
+  --color-light-border: #D6D0C3;
+
+  /* Accents & States */
+  --color-primary: #18324A;
+  --color-info: #5E7D91;
+  --color-success: #5D8068;
+  --color-warning: #C08A3E;
+  --color-danger: #B85C4A;
+  --color-neutral: #8B8982;
+}
+
+:root {
+  /* Canvas / Backgrounds */
+  --color-bg-primary: #F3EFE5;
+  --color-background: #F3EFE5;
+  --color-bg-secondary: #E9E1D0;
+  --color-secondary-background: #E9E1D0;
+  --color-surface: #FAF8F2;
+  --color-pure-white: #FFFFFF;
+  --color-white: #FFFFFF;
+
+  /* Typography / Ink */
+  --color-ink: #171717;
+  --color-ink-secondary: #30302D;
+  --color-secondary-ink: #30302D;
+  --color-muted: #6E6A61;
+
+  /* Structural Borders & Dividers */
+  --color-border: #262522;
+  --color-border-light: #D6D0C3;
+  --color-light-border: #D6D0C3;
+
+  /* Accents & States */
+  --color-primary: #18324A;
+  --color-info: #5E7D91;
+  --color-success: #5D8068;
+  --color-warning: #C08A3E;
+  --color-danger: #B85C4A;
+  --color-neutral: #8B8982;
+
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #171717;
+  background-color: #F3EFE5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F3EFE5;
+  color: #171717;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Editorial design typography & utilities */
+.font-mono-data {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.meta-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6E6A61;
+}
+
+.editorial-border {
+  border: 1px solid var(--color-border, #262522);
+}
+
+.editorial-border-b {
+  border-bottom: 1px solid var(--color-border, #262522);
+}
+
+.editorial-border-t {
+  border-top: 1px solid var(--color-border, #262522);
+}
+
+.editorial-border-r {
+  border-right: 1px solid var(--color-border, #262522);
+}
+
+.editorial-border-l {
+  border-left: 1px solid var(--color-border, #262522);
+}
+
+.editorial-divider {
+  border-color: var(--color-border-light, #D6D0C3);
+}
+
+/* Subtle editorial scrollbar (cross-browser standard + webkit) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6E6A61 #E9E1D0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E9E1D0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6E6A61;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #171717;
+}
+
+/* ========================================================================= */
+/* Feature 2: Exact Motion System (Sections 25-33) */
+/* ========================================================================= */
+
+@keyframes authPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes formStepForward {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes formStepBackward {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successIconPop {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.auth-page-enter {
+  animation: authPageEnter 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.form-step-forward {
+  animation: formStepForward 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.form-step-backward {
+  animation: formStepBackward 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.auth-error-enter {
+  animation: errorSlideIn 180ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.auth-success-enter {
+  animation: successSlideIn 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.auth-success-icon {
+  animation: successIconPop 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ========================================================================= */
+/* Landing Page Polish: Navigation Drawer, Scroll Margins & Motion System    */
+/* ========================================================================= */
+
+@keyframes drawerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-enter {
+  animation: drawerSlideDown 210ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Precise scroll margins for sticky navbar offset */
+.scroll-mt-section {
+  scroll-margin-top: 5.5rem;
+}
+
+@media (min-width: 1024px) {
+  .scroll-mt-section {
+    scroll-margin-top: 6.5rem;
+  }
+}
+
+/* ========================================================================= */
+/* Editorial Scroll Reveal & Fade-in Motion (Subtle & Performant)            */
+/* ========================================================================= */
+
+.reveal-init {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 90ms;
+}
+
+.reveal-delay-2 {
+  transition-delay: 180ms;
+}
+
+.reveal-delay-3 {
+  transition-delay: 270ms;
+}
+
+.reveal-delay-4 {
+  transition-delay: 360ms;
+}
+
+/* Hero Entrance Stagger */
+@keyframes heroFadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-enter-label {
+  animation: heroFadeRise 500ms cubic-bezier(0.22, 1, 0.36, 1) 100ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-headline {
+  animation: heroFadeRise 550ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-desc {
+  animation: heroFadeRise 500ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-cta {
+  animation: heroFadeRise 500ms cubic-bezier(0.22, 1, 0.36, 1) 400ms forwards;
+  opacity: 0;
+}
+
+.hero-enter-visual {
+  animation: heroFadeRise 550ms cubic-bezier(0.22, 1, 0.36, 1) 500ms forwards;
+  opacity: 0;
+}
+
+/* Subtle button micro-interaction */
+.btn-editorial-hover {
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms ease, box-shadow 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+.btn-editorial-hover:hover {
+  transform: translateY(-1px);
+}
+.btn-editorial-hover:active {
+  transform: translateY(0);
+}
+
+/* Editorial subtle focus-visible indicator */
+:focus-visible {
+  outline: 2px solid #18324A;
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .auth-page-enter,
+  .form-step-forward,
+  .form-step-backward,
+  .auth-error-enter,
+  .auth-success-enter,
+  .auth-success-icon,
+  .mobile-menu-enter,
+  .reveal-init,
+  .reveal-visible,
+  .hero-enter-label,
+  .hero-enter-headline,
+  .hero-enter-desc,
+  .hero-enter-cta,
+  .hero-enter-visual,
+  .btn-editorial-hover {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+}
