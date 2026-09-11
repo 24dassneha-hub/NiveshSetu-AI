@@ -17,26 +17,40 @@ import {
 import { Link, useLocation, useNavigate } from '../../router';
 import { useAuth } from '../../context/AuthContext';
 import { getUnreadAlertsCount } from '../../data/alertsStorage';
+import { getLiveDashboardData } from '../../data/dashboardData';
 
 export default function Sidebar({ isOpen, onClose }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [unreadAlerts, setUnreadAlerts] = useState(() => getUnreadAlertsCount());
+  const [liveData, setLiveData] = useState(() => getLiveDashboardData(user));
 
   useEffect(() => {
-    const handleAlertsChange = () => {
+    const handleSync = () => {
       setUnreadAlerts(getUnreadAlertsCount());
+      setLiveData(getLiveDashboardData(user));
     };
-    window.addEventListener('alertsUpdated', handleAlertsChange);
-    window.addEventListener('appModeChanged', handleAlertsChange);
-    window.addEventListener('storage', handleAlertsChange);
+    window.addEventListener('alertsUpdated', handleSync);
+    window.addEventListener('appModeChanged', handleSync);
+    window.addEventListener('userBusinessProfileUpdated', handleSync);
+    window.addEventListener('storage', handleSync);
     return () => {
-      window.removeEventListener('alertsUpdated', handleAlertsChange);
-      window.removeEventListener('appModeChanged', handleAlertsChange);
-      window.removeEventListener('storage', handleAlertsChange);
+      window.removeEventListener('alertsUpdated', handleSync);
+      window.removeEventListener('appModeChanged', handleSync);
+      window.removeEventListener('userBusinessProfileUpdated', handleSync);
+      window.removeEventListener('storage', handleSync);
     };
-  }, []);
+  }, [user]);
+
+  const businessName = liveData?.business?.name || liveData?.businessContext?.businessName || user?.businessName || user?.name || 'OMM ENTERPRISES';
+  const initials = businessName
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase() || 'OE';
 
   // Primary navigation items (Strict sequence: Overview -> Documents -> Apply -> Approval -> Renewal -> Incentive -> Alerts -> Sneha AI)
   const mainNavItems = [
@@ -224,12 +238,12 @@ export default function Sidebar({ isOpen, onClose }) {
       <div className="pt-4 border-t border-[#262522] mt-auto">
         <div className="p-2.5 bg-[#FAF8F2] border border-[#262522] rounded-[4px] flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-[3px] bg-[#18324A] text-[#FAF8F2] flex items-center justify-center font-mono-data font-bold text-xs shrink-0">
-              {user?.businessName ? user.businessName.substring(0, 2).toUpperCase() : user?.name ? user.name.substring(0, 2).toUpperCase() : 'OE'}
+            <div className="w-8 h-8 rounded-[3px] bg-[#18324A] text-[#FAF8F2] flex items-center justify-center font-mono-data font-bold text-xs shrink-0 select-none">
+              {initials}
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="font-sans font-bold text-xs text-[#171717] truncate leading-tight uppercase">
-                {user?.businessName || user?.name || 'OMM ENTERPRISES'}
+              <span className="font-sans font-bold text-xs text-[#171717] truncate leading-tight uppercase" title={businessName}>
+                {businessName}
               </span>
               <span className="text-[10px] font-mono-data text-[#6E6A61] truncate">
                 Business Account
