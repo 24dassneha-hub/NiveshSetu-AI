@@ -341,6 +341,14 @@ export function AuthProvider({ children }) {
         return { success: false, error: error.message };
       }
 
+      // If Supabase returns user with empty identities, the email is already registered
+      if (data?.user?.identities && data.user.identities.length === 0) {
+        return {
+          success: false,
+          error: 'An account with this email address already exists. Please sign in instead.',
+        };
+      }
+
       if (data?.user) {
         // Attempt to upsert directly into profiles table as well
         try {
